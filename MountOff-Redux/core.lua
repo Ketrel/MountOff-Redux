@@ -20,7 +20,8 @@ function SlashCmdList.MOUNTOFF (args)
                         print("You can ride the same mount as your target... if you go outside.")
                         break
                     else
-                        print("Target is riding a mount you cannot use.")
+                        mountName,_,_,_,_,_,_,_,_,_,_,_ = C_MountJournal.GetMountInfoByID(mount)
+                        print("Target is riding a mount you cannot use: "..mountName.."")
                         break
                     end
                 end
