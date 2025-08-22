@@ -1,6 +1,6 @@
 ## Title: MountOff-Redux
 ## Notes: /mountoff [help] - without parameters: mounts the same mount as the target, if available.  With the 'help' parameter: prints this message.
-## Version: 3.0.1
-## Interface: 110005
+## Version: 4.0.0
+## Interface: 110200
 
 core.lua
