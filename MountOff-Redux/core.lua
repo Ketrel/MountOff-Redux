@@ -1,9 +1,23 @@
 SLASH_MOUNTOFF1 = '/mountoff'
+function secretCheck (args, name)
+    if issecretvalue(args) or issecrettable(args) then
+        if name then
+            print(name.." returned a secret value, aborting.")
+        end
+        return true
+    else
+        return false
+    end
+end
+
 function SlashCmdList.MOUNTOFF (args)
     if args == "help" then
         SendSystemMessage("/mountoff [help] - without parameters: mounts the same mount as the target, if available.  With the 'help' parameter: prints this message.")
         return
     end
+
+    if secretCheck(UnitIsPlayer("target"),"UnitIsPlayer") then return; end
+    if secretCheck(UnitGUID("target"),"UnitGUID") then return; end
 
     if UnitIsPlayer("target") or (UnitGUID("target") ~= nil and (select(6,strsplit('-', UnitGUID("target")))) == '224220') then
         local buff = nil
@@ -12,6 +26,12 @@ function SlashCmdList.MOUNTOFF (args)
             buff = C_TooltipInfo.GetUnitBuff("target",i)
             if buff and buff.id then
                 mount = C_MountJournal.GetMountFromSpell(buff.id)
+
+                --if secretCheck(mount) then
+                --    print("GetMountFromSpell returned a secret value, aborting")
+                --    return true
+                --end
+                if secretCheck(mount,"GetMountFromSpell") then return; end
                 if mount then
                     if C_MountJournal.GetMountUsabilityByID(mount, true) then
                         C_MountJournal.SummonByID(mount)
